@@ -2,20 +2,12 @@ package hpnj.mediatrack.domain.user;
 
 import hpnj.mediatrack.domain.media.Media;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.Instant;
 import java.util.UUID;
 
-/**
- * Persisted by the Kafka consumer – does not extend Auditable,
- * only carries the event timestamp from the message itself.
- */
 @Entity
 @Table(name = "activity_event")
-@Getter
-@Setter
 public class ActivityEvent {
 
     @Id
@@ -38,4 +30,52 @@ public class ActivityEvent {
 
     @Column(nullable = false)
     private Instant occurredAt;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UserAccount getUser() {
+        return user;
+    }
+
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
+    public Instant getOccurredAt() {
+        return occurredAt;
+    }
+
+    public void setOccurredAt(Instant occurredAt) {
+        this.occurredAt = occurredAt;
+    }
 }

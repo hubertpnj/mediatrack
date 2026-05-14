@@ -2,8 +2,6 @@ package hpnj.mediatrack.domain.party;
 
 import hpnj.mediatrack.domain.Auditable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
 
@@ -11,8 +9,6 @@ import java.util.UUID;
 @Table(name = "party")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
-@Getter
-@Setter
 public abstract class Party extends Auditable {
 
     @Id
@@ -23,4 +19,28 @@ public abstract class Party extends Auditable {
     private String name;
 
     private String imageUrl;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

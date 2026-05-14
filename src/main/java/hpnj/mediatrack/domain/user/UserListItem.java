@@ -2,15 +2,11 @@ package hpnj.mediatrack.domain.user;
 
 import hpnj.mediatrack.domain.media.Media;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "user_list_item")
-@Getter
-@Setter
 public class UserListItem {
 
     @EmbeddedId
@@ -37,5 +33,45 @@ public class UserListItem {
         if (addedAt == null) {
             addedAt = Instant.now();
         }
+    }
+
+    public UserListItemId getId() {
+        return id;
+    }
+
+    public void setId(UserListItemId id) {
+        this.id = id;
+    }
+
+    public UserList getList() {
+        return list;
+    }
+
+    public void setList(UserList list) {
+        this.list = list;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+
+    public int getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public Instant getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(Instant addedAt) {
+        this.addedAt = addedAt;
     }
 }

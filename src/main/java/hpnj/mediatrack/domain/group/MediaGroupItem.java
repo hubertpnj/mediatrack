@@ -2,15 +2,11 @@ package hpnj.mediatrack.domain.group;
 
 import hpnj.mediatrack.domain.media.Media;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "media_group_item")
-@Getter
-@Setter
 public class MediaGroupItem {
 
     @EmbeddedId
@@ -37,5 +33,45 @@ public class MediaGroupItem {
         if (addedAt == null) {
             addedAt = Instant.now();
         }
+    }
+
+    public MediaGroupItemId getId() {
+        return id;
+    }
+
+    public void setId(MediaGroupItemId id) {
+        this.id = id;
+    }
+
+    public MediaGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(MediaGroup group) {
+        this.group = group;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+
+    public int getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public Instant getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(Instant addedAt) {
+        this.addedAt = addedAt;
     }
 }

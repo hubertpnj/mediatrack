@@ -1,8 +1,6 @@
 package hpnj.mediatrack.domain.media;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +8,6 @@ import java.util.List;
 @Entity
 @Table(name = "game")
 @DiscriminatorValue("GAME")
-@Getter
-@Setter
 public class Game extends Media {
 
     @ElementCollection
@@ -20,4 +16,20 @@ public class Game extends Media {
     private List<String> platforms = new ArrayList<>();
 
     private String esrbRating;
+
+    public List<String> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(List<String> platforms) {
+        this.platforms = platforms;
+    }
+
+    public String getEsrbRating() {
+        return esrbRating;
+    }
+
+    public void setEsrbRating(String esrbRating) {
+        this.esrbRating = esrbRating;
+    }
 }

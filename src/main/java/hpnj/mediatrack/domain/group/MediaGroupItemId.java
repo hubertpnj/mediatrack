@@ -2,19 +2,12 @@ package hpnj.mediatrack.domain.group;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 @Embeddable
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
 public class MediaGroupItemId implements Serializable {
 
     @Column(name = "group_id")
@@ -22,4 +15,32 @@ public class MediaGroupItemId implements Serializable {
 
     @Column(name = "media_id")
     private UUID mediaId;
+
+    public MediaGroupItemId() {
+    }
+
+    public MediaGroupItemId(UUID groupId, UUID mediaId) {
+        this.groupId = groupId;
+        this.mediaId = mediaId;
+    }
+
+    public UUID getGroupId() {
+        return groupId;
+    }
+
+    public UUID getMediaId() {
+        return mediaId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MediaGroupItemId that)) return false;
+        return Objects.equals(groupId, that.groupId) && Objects.equals(mediaId, that.mediaId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId, mediaId);
+    }
 }
