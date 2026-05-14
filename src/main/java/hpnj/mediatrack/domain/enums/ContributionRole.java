@@ -1,4 +1,4 @@
-package com.mediatrack.domain.enums;
+package hpnj.mediatrack.domain.enums;
 
 /**
  * Flat enum covering contribution roles across all media types.

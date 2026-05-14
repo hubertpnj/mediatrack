@@ -1,7 +1,7 @@
-package com.mediatrack.domain.group;
+package hpnj.mediatrack.domain.group;
 
-import com.mediatrack.domain.Auditable;
-import com.mediatrack.domain.enums.MediaGroupType;
+import hpnj.mediatrack.domain.Auditable;
+import hpnj.mediatrack.domain.enums.MediaGroupType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

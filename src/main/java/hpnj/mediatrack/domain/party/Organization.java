@@ -1,4 +1,4 @@
-package com.mediatrack.domain.party;
+package hpnj.mediatrack.domain.party;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

@@ -1,6 +1,6 @@
-package com.mediatrack.domain.party;
+package hpnj.mediatrack.domain.party;
 
-import com.mediatrack.domain.Auditable;
+import hpnj.mediatrack.domain.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

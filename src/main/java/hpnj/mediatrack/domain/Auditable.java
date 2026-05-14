@@ -1,4 +1,4 @@
-package com.mediatrack.domain;
+package hpnj.mediatrack.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

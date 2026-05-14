@@ -1,4 +1,4 @@
-package com.mediatrack.domain.media;
+package hpnj.mediatrack.domain.media;
 
 import jakarta.persistence.*;
 import lombok.Getter;

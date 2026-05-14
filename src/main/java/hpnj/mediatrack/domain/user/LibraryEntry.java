@@ -1,8 +1,8 @@
-package com.mediatrack.domain.user;
+package hpnj.mediatrack.domain.user;
 
-import com.mediatrack.domain.Auditable;
-import com.mediatrack.domain.enums.LibraryStatus;
-import com.mediatrack.domain.media.Media;
+import hpnj.mediatrack.domain.Auditable;
+import hpnj.mediatrack.domain.enums.LibraryStatus;
+import hpnj.mediatrack.domain.media.Media;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

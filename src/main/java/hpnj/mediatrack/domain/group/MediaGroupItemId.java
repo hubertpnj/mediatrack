@@ -1,4 +1,4 @@
-package com.mediatrack.domain.group;
+package hpnj.mediatrack.domain.group;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

@@ -1,8 +1,8 @@
-package com.mediatrack.domain;
+package hpnj.mediatrack.domain;
 
-import com.mediatrack.domain.enums.ContributionRole;
-import com.mediatrack.domain.media.Media;
-import com.mediatrack.domain.party.Party;
+import hpnj.mediatrack.domain.enums.ContributionRole;
+import hpnj.mediatrack.domain.media.Media;
+import hpnj.mediatrack.domain.party.Party;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

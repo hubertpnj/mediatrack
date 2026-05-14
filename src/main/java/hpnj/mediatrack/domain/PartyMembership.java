@@ -1,7 +1,7 @@
-package com.mediatrack.domain;
+package hpnj.mediatrack.domain;
 
-import com.mediatrack.domain.party.Organization;
-import com.mediatrack.domain.party.Person;
+import hpnj.mediatrack.domain.party.Organization;
+import hpnj.mediatrack.domain.party.Person;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

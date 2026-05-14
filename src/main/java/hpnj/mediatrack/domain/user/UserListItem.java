@@ -1,6 +1,6 @@
-package com.mediatrack.domain.user;
+package hpnj.mediatrack.domain.user;
 
-import com.mediatrack.domain.media.Media;
+import hpnj.mediatrack.domain.media.Media;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
