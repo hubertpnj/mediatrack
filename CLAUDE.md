@@ -62,8 +62,33 @@ Always `@Enumerated(STRING)`.
 - Flyway for all schema changes — no manual DDL
 - No business logic in controllers; services own transactions
 
+## User roles & permissions
+
+`UserAccount.role` — single enum column, hierarchical, mutually exclusive.
+
+| Operacja | USER | MODERATOR | ADMIN |
+| --- | :---: | :---: | :---: |
+| Przeglądanie zatwierdzonej treści | ✅ | ✅ | ✅ |
+| Zarządzanie własną biblioteką | ✅ | ✅ | ✅ |
+| Składanie sugestii (każdy typ encji) | ✅ | ✅ | ✅ |
+| Zatwierdzanie / odrzucanie sugestii | ❌ | ✅ | ✅ |
+| Pełny CRUD na treści (Media, Party, Group) | ❌ | ✅ | ✅ |
+| Zarządzanie kontami użytkowników | ❌ | ❌ | ✅ |
+| Zmiana ról | ❌ | ❌ | ✅ |
+
+### Suggestion workflow
+
+Encja `Suggestion` przechowuje proponowane dane jako JSONB z cyklem życia `PENDING → APPROVED / REJECTED`. Po zatwierdzeniu serwis materializuje rekord w docelowej tabeli.
+
+```text
+entity_type : MOVIE | GAME | BOOK | ALBUM | PERSON | ORGANIZATION | MEDIA_GROUP
+status      : PENDING | APPROVED | REJECTED
+```
+
 ## Architecture decisions — always explain trade-offs
 
 When proposing implementation choices, explain the trade-offs and ask for justification before proceeding. This is a learning project.
 
 Do not explain code using comments, I want clean code and if I need to know something then I will ask you in the chat.
+
+Speak briefly - SAVE TOKENS.
