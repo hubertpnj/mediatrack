@@ -2,93 +2,31 @@
 
 Portfolio project: media tracking app (movies, games, books, music). Goal: learning + portfolio.
 
+## Dev environment
+
+MacBook Pro M3 Max, macOS 26. VS Code + IntelliJ IDEA (Free), Docker Desktop.
+
 ## Stack
 
-I work on my MacBook Pro M3 Max 36GB RAM, macOS 26.
-VS Code and latest IntelliJ IDEA (Free), Docker Desktop.
-
-| Layer | Technology |
-| --- | --- |  
-| Language | Java 25 LTS |
-| Framework | Spring Boot 3.5.x |
-| Security | Spring Security 6 + JWT |
-| Persistence | Spring Data JPA · Hibernate 6 · PostgreSQL 17 |
-| Migrations | Flyway |
-| Mapping | Manual mappers |
-| Cache | Redis 7.4.x |
-| Messaging | Apache Kafka 3.8.x |
-| Frontend | React 19 |
-| Infra | Docker Compose |
-
-## Domain model (JOINED inheritance)
-
-``` log
-Media (abstract)        → Movie, Game, Book, Album
-Party (abstract)        → Person, Organization
-PartyMembership         — Person ↔ Organization (role, date range)
-Contribution            — Party ↔ Media (role, order)
-UserAccount             → LibraryEntry (status/rating/review)
-                        → UserList → UserListItem
-                        → ActivityEvent (Kafka consumer)
-MediaGroup              — group_type: GENRE/FRANCHISE/UNIVERSE/SERIES/THEME
-  └── MediaGroupItem    — composite PK
-```
-
-`@Inheritance(JOINED)` + `@DiscriminatorColumn("dtype")` everywhere.
-
-## Enums
-
-- `LibraryStatus`: PLANNED / IN_PROGRESS / COMPLETED / DROPPED / ON_HOLD
-- `MediaGroupType`: GENRE / FRANCHISE / UNIVERSE / SERIES / THEME
-- `ContributionRole`: varies per media type
-
-Always `@Enumerated(STRING)`.
-
-## Redis key schema
-
-| Key | Type | TTL |
-| --- | --- | --- |  
-| `media:popular` | ZSet | — |
-| `media:cache:{uuid}` | String | 1h |
-| `search:{hash}` | String | 15min |
-| `user:session:{uuid}` | String | 24h |
+Java 25 · Spring Boot 3.5.x · Spring Security 6 + JWT · Spring Data JPA / Hibernate 6 · PostgreSQL 17 · Flyway · Redis 7.4.x · Kafka 3.8.x · React 19 · Docker Compose · Spring Shell 3.3.3 (CLI tool, `cli` profile)
 
 ## Conventions
 
-- UUID PKs everywhere
-- Auditing: `created_at` / `updated_at` on all entities
-- DTOs strictly separated from entities; mapping written manually
-- Global `@ControllerAdvice` exception handler
+- UUID PKs, `created_at`/`updated_at` on all entities (Spring Data auditing)
+- DTOs separate from entities, mapped manually
 - Flyway for all schema changes — no manual DDL
-- No business logic in controllers; services own transactions
+- Services own transactions, no business logic in controllers
+- Global `@ControllerAdvice` for exceptions
+- `@Enumerated(STRING)` always
+- `@Inheritance(JOINED)` + `@DiscriminatorColumn("dtype")` for Media and Party hierarchies
 
-## User roles & permissions
+## Working preferences
 
-`UserAccount.role` — single enum column, hierarchical, mutually exclusive.
+- No conventional commit prefixes — no `feat:`, `fix:`, `refactor:`, etc. Plain descriptive messages only.
+- No code comments — clean code; ask in chat if explanation needed
+- Always explain trade-offs before implementing — this is a learning project
+- Brief responses — save tokens
 
-| Operacja | USER | MODERATOR | ADMIN |
-| --- | :---: | :---: | :---: |
-| Przeglądanie zatwierdzonej treści | ✅ | ✅ | ✅ |
-| Zarządzanie własną biblioteką | ✅ | ✅ | ✅ |
-| Składanie sugestii (każdy typ encji) | ✅ | ✅ | ✅ |
-| Zatwierdzanie / odrzucanie sugestii | ❌ | ✅ | ✅ |
-| Pełny CRUD na treści (Media, Party, Group) | ❌ | ✅ | ✅ |
-| Zarządzanie kontami użytkowników | ❌ | ❌ | ✅ |
-| Zmiana ról | ❌ | ❌ | ✅ |
+## Design docs
 
-### Suggestion workflow
-
-Encja `Suggestion` przechowuje proponowane dane jako JSONB z cyklem życia `PENDING → APPROVED / REJECTED`. Po zatwierdzeniu serwis materializuje rekord w docelowej tabeli.
-
-```text
-entity_type : MOVIE | GAME | BOOK | ALBUM | PERSON | ORGANIZATION | MEDIA_GROUP
-status      : PENDING | APPROVED | REJECTED
-```
-
-## Architecture decisions — always explain trade-offs
-
-When proposing implementation choices, explain the trade-offs and ask for justification before proceeding. This is a learning project.
-
-Do not explain code using comments, I want clean code and if I need to know something then I will ask you in the chat.
-
-Speak briefly - SAVE TOKENS.
+See [`docs/design/`](docs/design/) for domain model, roles, permissions, Redis schema, and architecture decisions.
