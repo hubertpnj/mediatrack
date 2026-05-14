@@ -67,6 +67,13 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
+        <!-- Spring Shell -->
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell-starter</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+
         <!-- PostgreSQL driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
