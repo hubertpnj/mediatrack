@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: mediatrack-db
+    environment:
+      POSTGRES_DB: mediatrack
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - mediatrack_data:/var/lib/postgresql/data
+
+volumes:
+  mediatrack_data:
