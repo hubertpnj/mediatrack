@@ -3,6 +3,7 @@ package hpnj.mediatrack.domain.media;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "media_group")
 public class MediaGroup {
 
     @Id

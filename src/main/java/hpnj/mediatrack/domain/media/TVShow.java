@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "tv_show")
 @DiscriminatorValue("TV_SHOW")
 public class TVShow extends Media {
 

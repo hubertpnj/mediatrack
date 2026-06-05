@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(name = "library_entry")
 public class LibraryEntry {
 
     @Id

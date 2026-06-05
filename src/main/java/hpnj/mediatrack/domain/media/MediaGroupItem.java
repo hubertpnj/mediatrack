@@ -3,7 +3,7 @@ package hpnj.mediatrack.domain.media;
 import jakarta.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"group_id", "media_id"}))
+@Table(name = "media_group_item", uniqueConstraints = @UniqueConstraint(columnNames = {"group_id", "media_id"}))
 public class MediaGroupItem {
 
     @Id

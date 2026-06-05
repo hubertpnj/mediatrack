@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(name = "user_account")
 public class UserAccount {
 
     @Id

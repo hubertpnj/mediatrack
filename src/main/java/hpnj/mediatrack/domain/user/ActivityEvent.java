@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(name = "activity_event")
 public class ActivityEvent {
 
     @Id

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(name = "user_list_item")
 public class UserListItem {
 
     @Id
