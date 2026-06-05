@@ -1,4 +1,4 @@
-package hpnj.mediatrack.domain;
+package hpnj.mediatrack.domain.media;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
