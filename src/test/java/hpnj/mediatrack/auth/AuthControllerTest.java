@@ -3,6 +3,7 @@ package hpnj.mediatrack.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hpnj.mediatrack.common.ConflictException;
 import hpnj.mediatrack.common.UnauthorizedException;
+import hpnj.mediatrack.config.GlobalExceptionHandler;
 import hpnj.mediatrack.domain.user.UserAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ class AuthControllerTest {
     void setup() {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(new AuthController(authService, jwtService))
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
     }
 
