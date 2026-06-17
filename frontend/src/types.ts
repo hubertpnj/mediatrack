@@ -16,3 +16,9 @@ export interface MediaSummary {
   type: MediaType
   releaseDate: string | number[] | null
 }
+
+export interface UserInfo {
+  id: number
+  username: string
+  email: string
+}
