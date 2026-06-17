@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TmdbSyncService {
@@ -21,6 +22,7 @@ public class TmdbSyncService {
     private final TvShowRepository tvShowRepo;
     private final MediaGroupRepository mediaGroupRepo;
     private final MediaGroupItemRepository mediaGroupItemRepo;
+    private final MediaExternalIdRepository externalIdRepo;
 
     @Value("${tmdb.sync.popular-pages:5}")
     private int popularPages;
@@ -29,12 +31,14 @@ public class TmdbSyncService {
                            MovieRepository movieRepo,
                            TvShowRepository tvShowRepo,
                            MediaGroupRepository mediaGroupRepo,
-                           MediaGroupItemRepository mediaGroupItemRepo) {
+                           MediaGroupItemRepository mediaGroupItemRepo,
+                           MediaExternalIdRepository externalIdRepo) {
         this.apiClient = apiClient;
         this.movieRepo = movieRepo;
         this.tvShowRepo = tvShowRepo;
         this.mediaGroupRepo = mediaGroupRepo;
         this.mediaGroupItemRepo = mediaGroupItemRepo;
+        this.externalIdRepo = externalIdRepo;
     }
 
     public void initialImport() {
@@ -124,25 +128,37 @@ public class TmdbSyncService {
 
     private void upsertMovie(TmdbMovieDetail dto) {
         LocalDate releaseDate = parseDate(dto.releaseDate());
-        Movie movie = movieRepo.findByTmdbId(dto.id()).orElseGet(() -> {
-            Movie m = new Movie(dto.title(), releaseDate, dto.runtime());
-            m.setTmdbId(dto.id());
-            return m;
-        });
+        String externalId = String.valueOf(dto.id());
+
+        Optional<MediaExternalId> existing = externalIdRepo.findBySourceAndExternalId(ExternalIdSource.TMDB, externalId);
+        Movie movie;
+        if (existing.isPresent()) {
+            movie = (Movie) existing.get().getMedia();
+        } else {
+            movie = movieRepo.save(new Movie(dto.title(), releaseDate, dto.runtime()));
+            externalIdRepo.save(new MediaExternalId(movie, ExternalIdSource.TMDB, externalId));
+        }
+
         movie.setTitle(dto.title());
         movie.setReleaseDate(releaseDate);
         movie.setDurationMinutes(dto.runtime());
-        movie = movieRepo.save(movie);
+        movieRepo.save(movie);
         linkGenres(movie, dto.genres());
     }
 
     private void upsertTv(TmdbTvDetail dto) {
         LocalDate releaseDate = parseDate(dto.firstAirDate());
-        TVShow show = tvShowRepo.findByTmdbId(dto.id()).orElseGet(() -> {
-            TVShow s = new TVShow(dto.name(), releaseDate);
-            s.setTmdbId(dto.id());
-            return s;
-        });
+        String externalId = String.valueOf(dto.id());
+
+        Optional<MediaExternalId> existing = externalIdRepo.findBySourceAndExternalId(ExternalIdSource.TMDB, externalId);
+        TVShow show;
+        if (existing.isPresent()) {
+            show = (TVShow) existing.get().getMedia();
+        } else {
+            show = tvShowRepo.save(new TVShow(dto.name(), releaseDate));
+            externalIdRepo.save(new MediaExternalId(show, ExternalIdSource.TMDB, externalId));
+        }
+
         show.setTitle(dto.name());
         show.setReleaseDate(releaseDate);
         show = tvShowRepo.save(show);

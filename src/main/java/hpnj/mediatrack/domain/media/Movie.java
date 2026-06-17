@@ -9,9 +9,6 @@ public class Movie extends Media {
 
     private Integer durationMinutes;
 
-    @Column(name = "tmdb_id", unique = true)
-    private Integer tmdbId;
-
     protected Movie() {}
 
     public Movie(String title, LocalDate releaseDate, Integer durationMinutes) {
@@ -21,7 +18,4 @@ public class Movie extends Media {
 
     public Integer getDurationMinutes() { return durationMinutes; }
     public void setDurationMinutes(Integer durationMinutes) { this.durationMinutes = durationMinutes; }
-
-    public Integer getTmdbId() { return tmdbId; }
-    public void setTmdbId(Integer tmdbId) { this.tmdbId = tmdbId; }
 }

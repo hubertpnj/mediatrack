@@ -1,6 +1,7 @@
 package hpnj.mediatrack.tmdb;
 
-import hpnj.mediatrack.media.MovieRepository;
+import hpnj.mediatrack.domain.media.ExternalIdSource;
+import hpnj.mediatrack.media.MediaExternalIdRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,16 +17,16 @@ public class TmdbScheduler {
     private static final Logger log = LoggerFactory.getLogger(TmdbScheduler.class);
 
     private final TmdbSyncService syncService;
-    private final MovieRepository movieRepo;
+    private final MediaExternalIdRepository externalIdRepo;
 
-    public TmdbScheduler(TmdbSyncService syncService, MovieRepository movieRepo) {
+    public TmdbScheduler(TmdbSyncService syncService, MediaExternalIdRepository externalIdRepo) {
         this.syncService = syncService;
-        this.movieRepo = movieRepo;
+        this.externalIdRepo = externalIdRepo;
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void onStartup() {
-        if (!movieRepo.existsByTmdbIdIsNotNull()) {
+        if (!externalIdRepo.existsBySource(ExternalIdSource.TMDB)) {
             log.info("No TMDB data found — running initial import");
             syncService.initialImport();
         } else {
