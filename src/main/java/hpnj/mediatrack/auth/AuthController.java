@@ -1,7 +1,9 @@
 package hpnj.mediatrack.auth;
 
 import hpnj.mediatrack.domain.user.UserAccount;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -39,7 +41,9 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletResponse response) {
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) session.invalidate();
         ResponseCookie cookie = ResponseCookie.from("auth_token", "")
                 .httpOnly(true).sameSite("Lax").path("/").maxAge(0).build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());

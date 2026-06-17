@@ -20,8 +20,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest request) {
-        OAuth2User oAuth2User = delegate.loadUser(request);
+        return loadUserFromOAuth2User(delegate.loadUser(request));
+    }
 
+    OAuth2UserPrincipal loadUserFromOAuth2User(OAuth2User oAuth2User) {
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name");
 

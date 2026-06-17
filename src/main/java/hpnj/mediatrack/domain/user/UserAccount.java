@@ -17,7 +17,7 @@ public class UserAccount {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String passwordHash;
 
     @Column(nullable = false, updatable = false)
