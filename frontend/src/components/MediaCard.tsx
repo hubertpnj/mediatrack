@@ -42,9 +42,24 @@ interface Props {
 
 export default function MediaCard({ item }: Props) {
   const typeClass = item.type.toLowerCase()
+
   return (
     <article className={`media-card media-card--${typeClass}`}>
       <div className="media-card__bar" />
+      <img
+        className="media-card__image"
+        src={`/images/${item.id}.jpg`}
+        alt={item.title}
+        onError={e => {
+          const img = e.currentTarget
+          img.style.display = 'none'
+          const ph = img.nextElementSibling as HTMLElement | null
+          if (ph) ph.style.display = 'flex'
+        }}
+      />
+      <div className="media-card__image-placeholder">
+        {TYPE_ICONS[item.type]}
+      </div>
       <div className="media-card__body">
         <div className="media-card__meta">
           <span className={`type-badge type-badge--${typeClass}`}>

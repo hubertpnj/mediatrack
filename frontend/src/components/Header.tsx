@@ -13,7 +13,7 @@ export default function Header({ search, onSearch, totalCount, filteredCount }: 
       <div className="header__inner">
         <div className="header__logo">
           <div className="logo-mark">M</div>
-          <span className="logo-text">MediaTrack</span>
+          <span className="logo-text">Media<span>Track</span></span>
           {showCount && (
             <span className="header__count">
               {filteredCount === totalCount
