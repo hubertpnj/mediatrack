@@ -1,14 +1,30 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useMedia } from './hooks/useMedia'
 import type { MediaType } from './types'
 import Header from './components/Header'
 import TypeFilter from './components/TypeFilter'
 import MediaGrid from './components/MediaGrid'
 
+function getInitialTheme(): 'light' | 'dark' {
+  const stored = localStorage.getItem('theme')
+  if (stored === 'light' || stored === 'dark') return stored
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 export default function App() {
   const mediaState = useMedia()
   const [search, setSearch] = useState('')
   const [activeType, setActiveType] = useState<MediaType | null>(null)
+  const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme)
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  function toggleTheme() {
+    setTheme(t => t === 'light' ? 'dark' : 'light')
+  }
 
   const allItems = mediaState.status === 'success' ? mediaState.data : []
 
@@ -37,6 +53,8 @@ export default function App() {
         onSearch={setSearch}
         totalCount={allItems.length}
         filteredCount={filtered.length}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       <main className="main">
         <TypeFilter

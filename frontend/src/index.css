@@ -35,6 +35,44 @@
   --dur:  160ms;
 }
 
+/* ── Dark mode ──────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:            #0f0f0f;
+  --surface:       #1a1a1a;
+  --card:          #1a1a1a;
+  --card-hover:    #1f1a14;
+
+  --border:        #2a2a2a;
+  --border-hover:  #f97316;
+
+  --text-1:        #f0f0f0;
+  --text-2:        #999999;
+  --text-3:        #555555;
+
+  --accent-soft:   rgba(249,115,22,.18);
+  --accent-glow:   rgba(249,115,22,.35);
+
+  --c-movie:   #3b82f6;  --bg-movie:   rgba(59,130,246,.12);   --bd-movie:   rgba(59,130,246,.3);
+  --c-tvshow:  #22c55e;  --bg-tvshow:  rgba(34,197,94,.12);    --bd-tvshow:  rgba(34,197,94,.3);
+  --c-book:    #f59e0b;  --bg-book:    rgba(245,158,11,.12);   --bd-book:    rgba(245,158,11,.3);
+  --c-album:   #a855f7;  --bg-album:   rgba(168,85,247,.12);   --bd-album:   rgba(168,85,247,.3);
+  --c-game:    #ef4444;  --bg-game:    rgba(239,68,68,.12);    --bd-game:    rgba(239,68,68,.3);
+}
+
+[data-theme="dark"] .header {
+  background: rgba(15,15,15,.92);
+  border-bottom-color: var(--accent);
+}
+
+[data-theme="dark"] .search-input {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .media-card {
+  background: var(--surface);
+}
+
 /* ── Reset ─────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -121,6 +159,24 @@ input  { font: inherit; color: inherit; }
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-full);
   letter-spacing: 0.01em;
+}
+
+/* ── Theme toggle ──────────────────────────────────────── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  color: var(--text-2);
+  flex-shrink: 0;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 
 /* ── Search bar ────────────────────────────────────────── */
@@ -298,7 +354,7 @@ input  { font: inherit; color: inherit; }
   position: absolute;
   bottom: 0; left: 0; right: 0;
   padding: 2rem 0.75rem 0.75rem;
-  background: linear-gradient(to top, rgba(0,0,0,.96) 0%, rgba(0,0,0,.75) 45%, rgba(0,0,0,.2) 75%, transparent 100%);
+  background: linear-gradient(to top, rgba(0,0,0,.96) 0%, rgba(0,0,0,.75) 60%, rgba(0,0,0,.2) 85%, transparent 100%);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
