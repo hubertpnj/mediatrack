@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:17
+    container_name: mediatrack-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mediatrack
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    volumes:
+      - mediatrack_data:/var/lib/postgresql/data
+    networks:
+      - mediatrack
+
+  backend:
+    build: .
+    container_name: mediatrack-backend
+    restart: unless-stopped
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mediatrack
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-postgres}
+    networks:
+      - mediatrack
+
+  frontend:
+    build: ./frontend
+    container_name: mediatrack-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - mediatrack
+
+networks:
+  mediatrack:
+    driver: bridge
+
+volumes:
+  mediatrack_data:
